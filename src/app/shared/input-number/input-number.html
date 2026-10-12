@@ -1,0 +1,36 @@
+<div class="field" style="text-align: start">
+  @if (label) {
+    <label [for]="id" class="d-block" style="color: #334155">
+      {{ label }}
+      @if (required) {
+        <span class="required">*</span>
+      }
+    </label>
+  }
+
+  <p-inputNumber
+    [ngModel]="value"
+    (ngModelChange)="onInputChange($event)"
+    [min]="min"
+    [max]="max"
+    [step]="step"
+    [minFractionDigits]="minFractionDigits"
+    [maxFractionDigits]="maxFractionDigits"
+    [mode]="mode"
+    [currency]="currency"
+    [locale]="locale"
+    [disabled]="disabled"
+    [invalid]="invalid"
+    style="width: 100%"
+    [size]="size"
+    [showButtons]="showButtons"
+    [buttonLayout]="buttonLayout"
+  >
+  </p-inputNumber>
+
+  @if (invalid && errorMessage) {
+    <small class="p-error error-message">
+      {{ errorMessage }}
+    </small>
+  }
+</div>

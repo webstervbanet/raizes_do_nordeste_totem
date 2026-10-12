@@ -1,0 +1,24 @@
+<header class="header">
+  <nav>
+    <ul class="menu">
+      <li title="Cardápio">
+        <a routerLink="/home" routerLinkActive="active">
+          <svg lucideHandPlatter [size]="24" [strokeWidth]="2"></svg>
+          <span>Cardápio</span>
+        </a>
+      </li>
+
+      <li title="Carrinho">
+        <a routerLink="/carrinho" routerLinkActive="active">
+          <svg lucideShoppingCart [size]="24" [strokeWidth]="2"></svg>
+          <span>Carrinho</span>
+          @if (carrinhoService.getQuantidade() > 0) {
+            <strong class="carrinho-quantidade">
+              {{ carrinhoService.getQuantidade() }}
+            </strong>
+          }
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>

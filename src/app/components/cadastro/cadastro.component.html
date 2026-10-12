@@ -1,0 +1,157 @@
+<div class="login-container">
+  <!-- Header com logo -->
+  <header class="header">
+    <div class="logo-section">
+      <div class="logo">
+        <svg
+          lucideCookingPot
+          [size]="48"
+          color="#003e1f"
+          [strokeWidth]="2"
+          title="Raizes do Nordeste"
+        ></svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- Área principal de cadastro -->
+  <div class="login-main">
+    <div class="login-box">
+      <h1 class="login-title">Raízes do Nordeste</h1>
+      <p class="login-subtitle">Crie sua conta</p>
+
+      <form [formGroup]="form" class="login-form">
+        <app-input
+          label="Usuário"
+          type="text"
+          name="username"
+          placeholder="usuario"
+          formControlName="nome"
+          minlength="3"
+          [errorMessage]="'O nome de usuário deve ter pelo menos 3 caracteres.'"
+          [invalid]="form.get('nome')?.invalid && form.get('nome')?.touched"
+        />
+        <app-input
+          label="E-mail"
+          type="email"
+          name="email"
+          placeholder="exemplo@teste.com"
+          formControlName="email"
+          [invalid]="form.get('email')?.invalid && form.get('email')?.touched"
+          [errorMessage]="'Por favor, insira um email válido.'"
+        />
+        <app-input
+          label="Senha"
+          type="password"
+          name="password"
+          placeholder="•••••••"
+          formControlName="password"
+          [invalid]="form.get('password')?.invalid && form.get('password')?.touched"
+          [errorMessage]="'A senha deve ter pelo menos 6 caracteres.'"
+        />
+        <app-input
+          label="Confirmar Senha"
+          type="password"
+          name="confirmPassword"
+          placeholder="•••••••"
+          formControlName="confirmPassword"
+          [invalid]="form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched"
+          [errorMessage]="'A senha deve ter pelo menos 6 caracteres.'"
+        />
+
+        <div class="container-endereco">
+          <h6>Endereço</h6>
+          <app-input-mask
+            label="CEP"
+            mask="99999-999"
+            placeholder="99999-999"
+            label="CEP"
+            name="cep"
+            placeholder="Digite seu CEP"
+            formControlName="cep"
+            [invalid]="form.get('cep')?.invalid && form.get('cep')?.touched"
+            [errorMessage]="'Por favor, insira um CEP válido.'"
+          />
+
+          <app-input
+            label="Rua"
+            type="text"
+            name="rua"
+            placeholder="Digite sua rua"
+            formControlName="rua"
+            [invalid]="form.get('rua')?.invalid && form.get('rua')?.touched"
+            [errorMessage]="'Por favor, insira uma rua válida.'"
+          />
+          <app-input
+            label="Número"
+            type="text"
+            name="numero"
+            placeholder="Digite o número"
+            formControlName="numero"
+            [invalid]="form.get('numero')?.invalid && form.get('numero')?.touched"
+            [errorMessage]="'Por favor, insira um número válido.'"
+          />
+          <app-input
+            label="Bairro"
+            type="text"
+            name="bairro"
+            placeholder="Digite o bairro"
+            formControlName="bairro"
+            [invalid]="form.get('bairro')?.invalid && form.get('bairro')?.touched"
+            [errorMessage]="'Por favor, insira um bairro válido.'"
+          />
+          <app-input
+            label="Cidade"
+            type="text"
+            name="cidade"
+            placeholder="Digite a cidade"
+            formControlName="cidade"
+            [invalid]="form.get('cidade')?.invalid && form.get('cidade')?.touched"
+            [errorMessage]="'Por favor, insira uma cidade válida.'"
+          />
+          <app-input
+            label="Estado"
+            type="text"
+            name="estado"
+            placeholder="Digite o estado"
+            formControlName="estado"
+            [invalid]="form.get('estado')?.invalid && form.get('estado')?.touched"
+            [errorMessage]="'Por favor, insira um estado válido.'"
+          />
+        </div>
+
+        <button
+          type="submit"
+          class="login-btn"
+          (click)="onRegister($event)"
+          [class.loading]="isLoading"
+        >
+          <span *ngIf="!isLoading">Cadastrar</span>
+
+          <span *ngIf="isLoading">
+            <span class="spinner"></span>
+            Redirecionando...
+          </span>
+        </button>
+
+        <div>
+          <p class="terms-text">
+            <app-checkbox
+              id="termosAceitos"
+              size="large"
+              formControlName="termosAceitos"
+              [invalid]="form.get('termosAceitos')?.invalid && form.get('termosAceitos')?.touched"
+            />
+            Ao se cadastrar você concorda com nossos <a routerLink="/termos">Termos de Uso</a> e com
+            a coleta de dados conforme
+            <a routerLink="/politica-privacidade">Política de Privacidade</a> e LGPD.
+          </p>
+        </div>
+
+        <div>
+          <p>Já possuí uma conta? <a routerLink="/login">Acesse aqui</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

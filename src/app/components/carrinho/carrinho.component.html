@@ -1,0 +1,36 @@
+<h2>Carrinho</h2>
+
+@if (carrinhoService.getQuantidade() > 0) {
+  <p>Quantidade de itens: {{ carrinhoService.getQuantidade() }}</p>
+  <ul>
+    @for (item of carrinhoService.getProdutos(); track item.id) {
+      <li class="prato-card">
+        <span class="carrinho-remover" (click)="removerDoCarrinho(item.id)">X</span>
+        <img class="prato-imagem" [src]="item.imagem" [alt]="item.nome" />
+        <h4>{{ item.nome }}</h4>
+        <strong>{{ item.preco * item.quantidade | currency: 'BRL' }}</strong>
+        <div class="quantidade-container">
+          <app-input-number
+            type="number"
+            id="quantidade"
+            [min]="1"
+            [(ngModel)]="item.quantidade"
+            [showButtons]="true"
+            (ngModelChange)="item.quantidade = $event"
+          />
+        </div>
+      </li>
+    }
+  </ul>
+  <p>Total: {{ carrinhoService.getTotal() | currency: 'BRL' }}</p>
+  <app-button
+    name="Finalizar Pedido"
+    routerLink="/checkout"
+    iconLeft="pi pi-check"
+    class="btn"
+    size="lg"
+  />
+} @else {
+  <p>O carrinho está vazio.</p>
+  <app-button routerLink="/home" name="Faça seu pedido" class="btn" />
+}

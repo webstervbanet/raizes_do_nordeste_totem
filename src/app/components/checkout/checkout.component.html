@@ -1,0 +1,195 @@
+@if (!pagamento()) {
+  <div class="card">
+    <h4>Resumo do Pedido</h4>
+
+    <div class="card-infos">
+      Subtotal:
+      <strong>
+        {{ carrinhoService.getTotal() | currency: 'BRL' }}
+      </strong>
+    </div>
+
+    @if (carrinhoService.getTotal() >= 100) {
+      <div class="card-infos">
+        Desconto:
+        <strong>-20%</strong>
+      </div>
+    }
+
+    <hr />
+
+    <div class="card-infos">
+      Total do Pedido:
+      <strong>
+        {{ carrinhoService.getTotalFinal() | currency: 'BRL' }}
+      </strong>
+    </div>
+
+    <app-button
+      name="Ir para Pagamento"
+      (clicked)="selecionarPagamento()"
+      iconLeft="pi pi-credit-card"
+      class="btn mt-2"
+      size="lg"
+    />
+  </div>
+} @else if (pagamento() && !processandoPedido()) {
+  <div class="card checkout-totem">
+    <h4>Forma de pagamento</h4>
+
+    <p class="text-center">Selecione como deseja pagar seu pedido.</p>
+
+    <div class="formas-pagamento">
+      <button
+        type="button"
+        class="opcao-pagamento"
+        [class.selecionado]="formaPagamento === 'cartao'"
+        (click)="selecionarFormaPagamento('cartao')"
+      >
+        <i class="pi pi-credit-card"></i>
+        <span>Cartão por aproximação</span>
+        <small>Débito ou crédito</small>
+      </button>
+
+      <button
+        type="button"
+        class="opcao-pagamento"
+        [class.selecionado]="formaPagamento === 'pix'"
+        (click)="selecionarFormaPagamento('pix')"
+      >
+        <i class="pi pi-qrcode"></i>
+        <span>PIX</span>
+        <small>Pagamento instantâneo</small>
+      </button>
+    </div>
+
+    <div class="total-pagamento">
+      <span>Total do pedido</span>
+      <strong>
+        {{ carrinhoService.getTotalFinal() | currency: 'BRL' }}
+      </strong>
+    </div>
+
+    @if (formaPagamento === 'cartao') {
+      <div class="pagamento-cartao">
+        <div class="icone-aproximacao">
+          <i class="pi pi-credit-card"></i>
+          <i class="pi pi-wifi"></i>
+        </div>
+
+        <p>Aproxime seu cartão, celular ou smartwatch da máquina para realizar pagamento.</p>
+
+        @if (!isLoading()) {
+          <app-button
+            name="Pagar com cartão"
+            (clicked)="simularPagamento()"
+            iconLeft="pi pi-wifi"
+            class="btn mt-2"
+            size="lg"
+          />
+        } @else {
+          <div class="processando-pagamento">
+            <i class="pi pi-spin pi-spinner"></i>
+            <p>Processando pagamento...</p>
+          </div>
+        }
+      </div>
+    }
+
+    @if (formaPagamento === 'pix') {
+      <div class="pagamento-pix">
+        <i class="pi pi-qrcode icone-pix"></i>
+
+        <p>Gere um QR Code para concluir o pagamento.</p>
+
+        @if (!pixGerado) {
+          <app-button
+            name="Gerar PIX"
+            (clicked)="simularPagamentoPix()"
+            iconLeft="pi pi-qrcode"
+            class="btn mt-2"
+            [isLoading]="isLoading()"
+            [isDisabled]="isLoading()"
+            size="lg"
+          />
+        }
+      </div>
+    }
+
+    <small class="mt-2">
+      <strong>
+        <svg lucideLock [size]="16" [strokeWidth]="2"></svg>
+        Ambiente 100% seguro.
+      </strong>
+      Todos seus dados estão seguros e são tratados seguindo a LGPD.
+      <br />
+      <strong>
+        <svg lucideShieldKeyhole [size]="16" [strokeWidth]="2"></svg>
+        Pagamento seguro.
+      </strong>
+      Seus dados de cartão não ficam salvos em nosso sistema.
+    </small>
+  </div>
+} @else {
+  <div class="card acompanhamento-pedido">
+    <h4>Acompanhe seu pedido</h4>
+    <p class="mb-3 text-center">
+      {{ mensagemPedido }}
+    </p>
+    <p-progressBar [value]="value" [showValue]="true" class="mb-3" />
+    <p class="status-pedido">
+      Status: <strong>{{ statusPedido }}</strong>
+    </p>
+
+    @if (statusPedido === 'Concluído') {
+      <app-button
+        name="Continuar Comprando"
+        routerLink="/home"
+        iconLeft="pi pi-shopping-bag"
+        class="btn mt-2"
+        size="lg"
+      />
+    }
+  </div>
+}
+
+@if (popupPagamento()) {
+  <div class="modal-pagamento">
+    <div class="modal-pagamento-conteudo">
+      @if (statusPopup() === 'processando' && formaPagamento === 'pix') {
+        <div class="loading-pagamento">
+          <i class="pi pi-spin pi-spinner"></i>
+        </div>
+
+        <h2>Aguardando pagamento...</h2>
+
+        <i class="pi pi-qrcode" style="font-size: 128px"></i>
+
+        <p>Aguarde enquanto confirmamos seu pagamento.</p>
+      }
+
+      @if (statusPopup() === 'processando' && formaPagamento === 'cartao') {
+        <div class="loading-pagamento">
+          <i class="pi pi-spin pi-spinner"></i>
+        </div>
+
+        <h2>Aguardando pagamento, aproxime ou insira o cartão...</h2>
+
+        <i class="pi pi-wifi" style="font-size: 128px"></i>
+
+        <p>Aguarde enquanto confirmamos seu pagamento.</p>
+      }
+
+      @if (statusPopup() === 'concluido') {
+        <div class="sucesso-pagamento">
+          <i class="pi pi-check"></i>
+        </div>
+
+        <h1>Anote o número para retirada do pedido #{{ numeroRetirada }}</h1>
+
+        <h2>Pagamento concluído!</h2>
+        <p>Pagamento aprovado com sucesso. Obrigado pela sua compra!</p>
+      }
+    </div>
+  </div>
+}

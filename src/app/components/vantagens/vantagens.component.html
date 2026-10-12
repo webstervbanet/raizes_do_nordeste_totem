@@ -1,0 +1,46 @@
+<div class="promocao">
+  <h2>Clube de Vantagens</h2>
+  <p>Suas compras valem recompensas!</p>
+
+  <div class="pontos">
+    <div>
+      <h3>Ganhe pontos a cada pedido!</h3>
+      <p>A cada pedido realizado, você acumula pontos para trocar por descontos exclusivos.</p>
+    </div>
+  </div>
+
+  <div class="beneficios">
+    <span>💰 Acumule pontos</span>
+    <span>🎉 Ganhe vantagens</span>
+    <span>🛍️ Compre e economize</span>
+  </div>
+
+  <small>Faça seu pedido e comece a acumular!</small>
+</div>
+
+<div class="meus-pontos">
+  <div class="saldo-pontos">
+    <span>Seu saldo</span>
+    <h3>{{ pedidoService.getPontos() }} pontos</h3>
+    <p>Continue comprando para ganhar mais!</p>
+  </div>
+
+  @for (item of recompensas; track $index) {
+    <div class="recompensa">
+      <div class="recompensa-infos">
+        <h3>{{ item.nome }}</h3>
+        <span class="custo-pontos">{{ item.pontos }}</span>
+      </div>
+
+      <hr />
+      <app-button
+        name="Resgatar recompensa"
+        (clicked)="resgatar(item)"
+        iconLeft="pi pi-star"
+        class="btn"
+        size="lg"
+        [isDisabled]="pedidoService.getPontos() >= item.pontos ? false : true"
+      />
+    </div>
+  }
+</div>

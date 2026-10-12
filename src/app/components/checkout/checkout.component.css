@@ -1,0 +1,243 @@
+.card {
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.imagem {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.card h4 {
+  margin: 0 0 10px 0;
+  color: var(--app-dark);
+  font-family: 'Corinthia', cursive;
+  font-weight: 700;
+  font-style: normal;
+  font-size: 32px;
+  text-align: center;
+}
+
+.card p {
+  margin: 0;
+  color: var(--app-text);
+}
+
+.card:hover {
+  background-color: var(--app-default);
+  cursor: pointer;
+}
+
+.card-infos {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.acompanhamento-pedido {
+  width: 100%;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.status-pedido {
+  margin-top: 16px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.status-pedido strong {
+  color: #16a34a;
+}
+
+small {
+  color: rgb(131, 127, 127);
+}
+
+small strong {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+:host ::ng-deep .btn {
+  width: 100% !important;
+  padding: 0px;
+}
+
+.formas-pagamento {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 16px 0 24px;
+}
+
+.opcao-pagamento {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s;
+}
+
+.opcao-pagamento span {
+  flex: 1;
+  font-weight: 500;
+}
+
+.opcao-pagamento > i:first-child {
+  font-size: 1.4rem;
+}
+
+.opcao-pagamento.selecionado {
+  border-color: #16a34a;
+  background-color: #f0fdf4;
+  color: #166534;
+}
+
+.pix-info {
+  padding: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+}
+
+.pix-info > i {
+  font-size: 2.5rem;
+  color: #16a34a;
+}
+
+.pix-info h5 {
+  margin: 12px 0;
+}
+
+.total-pagamento {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px 0;
+  font-size: 1.1rem;
+}
+
+.seguranca-pagamento {
+  display: block;
+  margin-top: 16px;
+}
+
+.seguranca-pagamento strong {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+@media (max-width: 480px) {
+  .formas-pagamento {
+    grid-template-columns: 1fr;
+  }
+}
+.modal-pagamento {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(15, 23, 42, 0.72);
+  backdrop-filter: blur(4px);
+  animation: aparecerModal 0.2s ease;
+}
+
+.modal-pagamento-conteudo {
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 28px;
+  border-radius: 20px;
+  background: #fff;
+  text-align: center;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.25);
+}
+
+.modal-pagamento-conteudo h2 {
+  margin: 20px 0 10px;
+  font-size: 1.5rem;
+  color: #1f2937;
+}
+
+.modal-pagamento-conteudo p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.loading-pagamento {
+  display: flex;
+  justify-content: center;
+}
+
+.loading-pagamento i {
+  font-size: 4rem;
+  color: #16a34a;
+}
+
+.sucesso-pagamento {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 90px;
+  height: 90px;
+  margin: 0 auto;
+  border-radius: 50%;
+  background: #dcfce7;
+  color: #16a34a;
+  animation: sucessoPop 0.4s ease;
+}
+
+.sucesso-pagamento i {
+  font-size: 3.5rem;
+}
+
+@keyframes sucessoPop {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+
+  70% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes aparecerModal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}

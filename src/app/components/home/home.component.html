@@ -1,0 +1,32 @@
+<div>
+  <div class="promocao">
+    <h2>Promoção</h2>
+    <p>Em compras acima de R$ 100,00 ganhe 20% de desconto. Aproveite!</p>
+  </div>
+
+  <h2 class="cardapio-title">Cardápio {{ unidadeSelecionada().unidade }}</h2>
+
+  @for (item of unidadeSelecionada().cardapio; track $index) {
+    <div class="prato-card">
+      <img class="prato-imagem" [src]="item.imagem" [alt]="item.nome" />
+      <h4>{{ item.nome }}</h4>
+      <p>{{ item.descricao }}</p>
+      <strong>R$ {{ item.preco | number: '1.2-2' }}</strong>
+      <div class="quantidade-container">
+        <app-input-number
+          type="number"
+          id="quantidade"
+          [min]="1"
+          [(ngModel)]="item.quantidade"
+          (ngModelChange)="item.quantidade = $event"
+          [showButtons]="true"
+        />
+        <app-button
+          (clicked)="adicionarAoCarrinho(item)"
+          name="Adicionar"
+          iconLeft="pi pi-shopping-cart"
+        />
+      </div>
+    </div>
+  }
+</div>
